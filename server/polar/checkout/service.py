@@ -1084,7 +1084,7 @@ class CheckoutService:
         auth_subject: AuthSubject[User | Organization],
         product_id: uuid.UUID,
     ) -> tuple[Sequence[Product], Product, ProductPrice]:
-        product = await product_service.get_by_id(session, auth_subject, product_id)
+        product = await product_service.get(session, auth_subject, product_id)
 
         if product is None:
             raise PolarRequestValidationError(
@@ -1125,7 +1125,7 @@ class CheckoutService:
         errors: list[ValidationError] = []
 
         for index, product_id in enumerate(product_ids):
-            product = await product_service.get_by_id(session, auth_subject, product_id)
+            product = await product_service.get(session, auth_subject, product_id)
 
             if product is None:
                 errors.append(
